@@ -19,19 +19,31 @@ cursor = conn.cursor()
 
 def pg_create_table_index(script):
     # Create a table with a vector column
-    with cursor as cur:
-        cur.execute(script)
-        conn.commit()
-    if "table" in script.lower():
-        print("Table successfully created...")
-    elif "index" in script.lower():
-        print("Index successfully created...")
+    try:
+        with cursor as cur:
+            cur.execute(script)
+            conn.commit()
+        if "table" in script.lower():
+            print("Table successfully created...")
+        elif "index" in script.lower():
+            print("Index successfully created...")
+    except Exception as e:
+        # code that runs if an error occurs
+        print("Error occurred:", e)
 
 
 def pg_drop_table_index(table_name, object_type="TABLE"):
     sql = "DROP ".join(object_type).join(" IF EXISTS ").join(table_name).join(";")
     cursor.execute(sql)
     conn.commit()
+
+
+def pg_get_connection():
+    return conn
+
+
+def pg_get_cursor():
+    return cursor
 
 
 def pg_insert(sql, text, embedding):

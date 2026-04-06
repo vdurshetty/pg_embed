@@ -10,5 +10,11 @@ psycopg2-binary
 
 # image embed
 pillow
-torch
-torchvision
+#torch
+#torchvision
+#transformers
+
+numpy<2
+#CLIP
+#scikit-learn
+sentence_transformers

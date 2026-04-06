@@ -11,7 +11,7 @@
             <td>  <select id="categorySelect" onchange="loadFiles()">
                 <option value="">-- Select --</option>
                 <option value="docs">PDF Files</option>
-                <option value="images">Image Files</option>
+                <option value="image">Image Files</option>
                 <option value="voice">Voice Recordings</option>
               </select>
             </td>
@@ -24,8 +24,8 @@
             </td>
         </tr>
         <tr>
-            <td><button id="up" name="upload" >upload</button></td>
-            <td><button id="del" name="delete" onclick="deleteFiles()">delete</button>
+            <td><button id="up" name="store" onclick="storeImage()">Embed Image</button></td>
+            <td><button id="del" name="delete" onclick="deleteFiles()">Delete</button>
             </td>
         </tr>
     </table>
@@ -64,6 +64,27 @@
               try {
                 const response = await fetch("/deletefile?type=" + selectedType + "&file=" + select.options[select.selectedIndex].text, {
                     method: "DELETE"
+                });
+
+                const result = await response.json();
+                console.log( result);
+                document.getElementById("status").value = result;
+                loadFiles();
+              } catch (error) {
+                document.getElementById('status').innerText = "Error uploading file!";
+                console.error(error);
+            }
+        }
+
+
+        async function  storeImage() {
+            const selectedType = document.getElementById("categorySelect").value;
+            const select = document.getElementById("fileSelect");
+            const filename = select.options[select.selectedIndex].text
+            console.log("selected file name is :", filename);
+              try {
+                const response = await fetch("/embedimage?type=" + selectedType + "&file=" + filename, {
+                    method: "POST"
                 });
 
                 const result = await response.json();

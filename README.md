@@ -22,7 +22,7 @@ python3.10 -m pip install --upgrade pip
 
 ## Install python libraries 
 % pip install -r requirements.txt 
-% pip uninstall -r requirements.txt 
+% pip uninstall -r requirements.txt -y 
 
 ## Run the REST API server 
 % gunicorn main:app
