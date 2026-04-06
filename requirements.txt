@@ -1,0 +1,14 @@
+#rest apis
+flask
+flask_cors
+uvicorn
+gunicorn
+load_dotenv
+
+#postgres db
+psycopg2-binary
+
+# image embed
+pillow
+torch
+torchvision
