@@ -7,12 +7,19 @@ pgvector_key = os.environ.get("pg_password")
 
 
 # Connect to your database
+# conn = psycopg2.connect(
+#     dbname="postgres",
+#     user="postgres",
+#     password=pgvector_key,
+#     host="db.hjutiuttzsdrzoyzuzmx.supabase.co",
+#     port=5432
+# )
+
+connection_str = "postgresql://postgres:" + pgvector_key + "@db.hjutiuttzsdrzoyzuzmx.supabase.co:5432/postgres"
+
 conn = psycopg2.connect(
-    dbname="postgres",
-    user="postgres",
-    password=pgvector_key,
-    host="db.hjutiuttzsdrzoyzuzmx.supabase.co",
-    port=5432
+    connection_str,
+    sslmode="require"
 )
 
 
