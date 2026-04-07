@@ -3,15 +3,14 @@ import os
 from dotenv import load_dotenv  # only needed locally
 
 load_dotenv()
-pgvector_key = os.environ.get("pg_password")
-host_name = "db.hjutiuttzsdrzoyzuzmx.supabase.co"
-
+pgvector_key = os.environ.get("render_pg_pwd")
+host_name = os.environ.get("render_pg_host")
 
 
 #Connect to your database
 conn = psycopg2.connect(
-    dbname="postgres",
-    user="postgres",
+    dbname="vtest",
+    user="venu_pg",
     password=pgvector_key,
     host=host_name,
     port=5432,
