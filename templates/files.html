@@ -83,8 +83,15 @@
             const filename = select.options[select.selectedIndex].text
             console.log("selected file name is :", filename);
               try {
-                const response = await fetch("/embedimage?type=" + selectedType + "&file=" + filename, {
-                    method: "POST"
+                const response = await fetch("/embedimage", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                      },
+                      body: JSON.stringify({
+                        type: selectedType,
+                        file: filename
+                      })
                 });
 
                 const result = await response.json();

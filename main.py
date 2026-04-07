@@ -232,9 +232,14 @@ def upload_docs():
 def embed_image():
     print("Inside Image Embed post method.....")
     response = jsonify({"error": "select file name"})
-    file_type = request.args.get('type')
+    data = request.get_json()
+
+    file_type = data.get("type")
+    filename = data.get("file")
+
+    #file_type = request.args.get('type')
     upload_folder = get_folder(file_type)
-    filename = request.args.get('file')
+    #filename = request.args.get('file')
     if filename is not None:
         file_path = upload_folder + "/" + filename
         if os.path.isfile(file_path):
