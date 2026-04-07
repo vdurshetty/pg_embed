@@ -4,23 +4,26 @@ from dotenv import load_dotenv  # only needed locally
 
 load_dotenv()
 pgvector_key = os.environ.get("pg_password")
+host_name = "db.hjutiuttzsdrzoyzuzmx.supabase.co"
 
 
-# Connect to your database
-# conn = psycopg2.connect(
-#     dbname="postgres",
-#     user="postgres",
-#     password=pgvector_key,
-#     host="db.hjutiuttzsdrzoyzuzmx.supabase.co",
-#     port=5432
-# )
 
-connection_str = "postgresql://postgres:" + pgvector_key + "@db.hjutiuttzsdrzoyzuzmx.supabase.co:5432/postgres"
-
+#Connect to your database
 conn = psycopg2.connect(
-    connection_str,
+    dbname="postgres",
+    user="postgres",
+    password=pgvector_key,
+    host=host_name,
+    port=5432,
     sslmode="require"
 )
+
+# connection_str = "postgresql://postgres:" + pgvector_key + "@db.hjutiuttzsdrzoyzuzmx.supabase.co:5432/postgres"
+#
+# conn = psycopg2.connect(
+#     connection_str,
+#     sslmode="require"
+# )
 
 
 
