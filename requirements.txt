@@ -1,6 +1,7 @@
 #rest apis
 flask
 flask_cors
+flasgger
 uvicorn
 gunicorn
 load_dotenv

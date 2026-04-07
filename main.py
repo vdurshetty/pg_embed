@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
+from flasgger import Swagger
 import os
 import json
 from mypgvector.embed_image import pg_store_image
@@ -45,11 +46,19 @@ def check_upload_file(request_file):
 # os.chdir("..")
 print("Folder Path is :", os.getcwd())
 app = Flask(__name__, template_folder=os.getcwd() + "/templates")
+Swagger(app)
 CORS(app)
 
 
 @app.route("/")
 def home():
+    """
+    Home endpoint
+    ---
+    responses:
+      200:
+        description: Success
+    """
     print("current path:", request.full_path)
     return render_template("upload.html")
 
@@ -68,6 +77,23 @@ def my_upload():
 
 @app.route("/list")
 def my_files():
+    """
+    List Files
+    ---
+    responses:
+      200:
+        description: List of users
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              name:
+                type: string
+    """
+
     print("current path:", request.full_path)
     return render_template("files.html")
 
@@ -92,6 +118,20 @@ def get_folder(file_type):
 
 @app.route("/files")
 def get_files():
+    """
+    Get Files
+    ---
+    responses:
+      200:
+        description: List of files
+        schema:
+          type: array
+          items:
+            type: object
+            properties:
+              file:
+                type: string
+    """
     response = jsonify({"error": "valid query types are ?type=[docs/image/voice]"})
     file_type = request.args.get('type')
     print("File Type  is :", file_type)
@@ -127,9 +167,39 @@ def save_file(file, folder):
 
 @app.route("/upload_docs", methods=["POST"])
 def upload_docs():
+    """
+    Upload a file to server
+    ---
+    tags:
+      - Users
+    description: Upload a file to server
+    consumes:
+      - multipart/form-data
+    parameters:
+      - name: type
+        in: header
+        type: string
+        required: true
+        description: File Type to upload
+      - name: file
+        in: formData
+        type: file
+        required: true
+        description: File to upload
+    responses:
+      201:
+        description: File Upload successful
+        schema:
+          type: object
+          properties:
+            filename:
+              type: string
+              example: file_name
+      400:
+        description: Invalid input
+    """
     print("in Upload docs method")
     file_type = request.headers.get("type")
-    print("File TYoe is :", file_type)
     file = check_upload_file(request.files)
     # Check if type is image
     if file_type.upper() == UPLOAD_TYPE[0]:
