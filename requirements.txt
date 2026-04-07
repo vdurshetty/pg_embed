@@ -8,13 +8,17 @@ load_dotenv
 #postgres db
 psycopg2-binary
 
-# image embed
-pillow
-#torch
-#torchvision
-#transformers
+# open ai
+openai
 
+##
+torch
+torchvision
+pillow
 numpy<2
-#CLIP
-#scikit-learn
-sentence_transformers
+#sentence-transformers
+#transformers
+#accelerate
+transformers==4.41.2
+accelerate==0.30.1
+sentence-transformers==2.7.0
