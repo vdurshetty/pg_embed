@@ -66,13 +66,6 @@ def pg_store_image(image_path):
     if not os.path.exists(image_path):
         print("Image file not exists")
         return "Image file not exists"
-    # --- 2. Embed image directly from file path (no PIL needed) ---
-    # image_embedding = model.encode(image_path)
-    # print("embedding is :", image_embedding)
-    # Generate embedding
-    #model = load_model()
-    #embedding = image_to_embedding(image_path, model)
-
     embeddings = image_embed_1.get_image_embedding(image_path)
     print("embedding is :", embeddings)
 

@@ -27,6 +27,8 @@ conn = psycopg2.connect(
 
 
 def pg_create_table_index(script):
+    print("Inside create table ")
+    print("Connection Details :", conn)
     # Create a table with a vector column
     cursor = conn.cursor()
     try:

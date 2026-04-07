@@ -230,6 +230,7 @@ def upload_docs():
 
 @app.route("/embedimage", methods=["POST"])
 def embed_image():
+    print("Inside Image Embed post method.....")
     response = jsonify({"error": "select file name"})
     file_type = request.args.get('type')
     upload_folder = get_folder(file_type)
@@ -237,6 +238,7 @@ def embed_image():
     if filename is not None:
         file_path = upload_folder + "/" + filename
         if os.path.isfile(file_path):
+            print("Image File exists, ", file_path)
             pg_store_image(file_path)
             response = jsonify({"message": "Image File Embeded successfully", "filename": filename}), 200
         else:
