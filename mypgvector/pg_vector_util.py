@@ -14,11 +14,12 @@ conn = psycopg2.connect(
     host="db.hjutiuttzsdrzoyzuzmx.supabase.co",
     port=5432
 )
-cursor = conn.cursor()
+
 
 
 def pg_create_table_index(script):
     # Create a table with a vector column
+    cursor = conn.cursor()
     try:
         with cursor as cur:
             cur.execute(script)
@@ -27,47 +28,59 @@ def pg_create_table_index(script):
             print("Table successfully created...")
         elif "index" in script.lower():
             print("Index successfully created...")
+        cursor.close()
     except Exception as e:
         # code that runs if an error occurs
         print("Error occurred:", e)
 
 
 def pg_drop_table_index(table_name, object_type="TABLE"):
+    cursor = conn.cursor()
     sql = "DROP ".join(object_type).join(" IF EXISTS ").join(table_name).join(";")
     cursor.execute(sql)
     conn.commit()
+    cursor.close()
 
 
 def pg_get_connection():
     return conn
 
 
-def pg_get_cursor():
-    return cursor
+def pg_insert_image(sql, filename, filepath, embedding):
+    cursor = conn.cursor()
+    cursor.execute(sql, (filename, filepath, embedding))
+    conn.commit()
+    cursor.close()
 
 
 def pg_insert(sql, text, embedding):
+    cursor = conn.cursor()
     cursor.execute(sql, (text, embedding))
     conn.commit()
+    cursor.close()
 
 
 def pg_execute(sql, embedding):
+    cursor = conn.cursor()
     cursor.execute(sql, (embedding,))
     return cursor.fetchall()
 
 
 def pg_execute_many(sql, data):
+    cursor = conn.cursor()
     cursor.executemany(sql, data)
     conn.commit()
     print("Multiple Records Inserted")
+    cursor.close()
 
 
 def pg_sql_execute(sql):
+    cursor = conn.cursor()
     cursor.execute(sql)
     return cursor.fetchall()
 
 
-def close_connection():
+def close_connection(cursor):
     cursor.close()
     conn.close()
 
