@@ -95,5 +95,26 @@ def close_connection(cursor):
     cursor.close()
     conn.close()
 
+
+def search_similar_images(query_embedding, top_k=5):
+    cur = conn.cursor()
+
+    # Convert embedding to list format
+    query_vector = list(map(float, query_embedding))
+
+    cur.execute("""
+        SELECT id, filename, embedding <-> %s AS distance
+        FROM images
+        ORDER BY embedding <-> %s
+        LIMIT %s;
+    """, (query_vector, query_vector, top_k))
+
+    results = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return results
+
 # create vector extension in postgresql database
 # pg_create_table("CREATE EXTENSION vector;")

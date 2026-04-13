@@ -19,6 +19,19 @@ python3.10 -m pip install --upgrade pip
 4. cd pg_embed
 5. create requirements.txt 
 
+# Run Ollama server local 
+% ollama serve (ther server starts and listerns on the port 11434)
+% ollama run gemma4:e4b  (Run gemma4 chat )
+
+run through
+curl http://localhost:11434/api/generate -d '{
+  "model": "gemma4:e4b",
+  "prompt": "Summarize the key ideas behind transformer architecture in three bullet points.",
+  "stream": false
+}'
+
+
+
 
 ## Install python libraries 
 % pip install -r requirements.txt 
@@ -32,6 +45,7 @@ python3.10 -m pip install --upgrade pip
 
 ## Run the REST API server 
 % gunicorn main:app
+% uvicorn myapi:app --reload
 
 
 # Database

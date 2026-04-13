@@ -98,10 +98,10 @@ def my_files():
     return render_template("files.html")
 
 
-@app.route("/record")
-def my_record():
+@app.route("/chatbot")
+def my_bot():
     print("current path:", request.full_path)
-    return render_template("myrecord.html")
+    return render_template("chatbot.html")
 
 
 def get_folder(file_type):
